@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify Insights</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <a href="/">
+        <img src="{{ url_for('static', filename='images/spotify_logo.svg') }}" 
+             alt="Spotify Logo" 
+            style="position: absolute; top: 20px; left: 20px; width: 200px;height: auto;">
+    </a>
+
+    <h1>Spotify Insights</h1>
+    <p>Descubra quais são os artistas e músicas mais ouvidos no último mês no seu Spotify.</p>
+    <a href="/login" class="btn-discover">Descubra</a>
+
+</body>
+</html>

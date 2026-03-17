@@ -1,0 +1,49 @@
+:root {
+    --spotify-green: #1DB954;
+    --bg-black: #121212;
+    --text-white: #ffffff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    max-width: 500px;
+}
+
+.btn-discover {
+    background-color: var(--spotify-green);
+    color: black;
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-discover:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
