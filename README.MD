@@ -123,6 +123,7 @@ Este projeto foi desenvolvido com foco em:
 ## 📸 Preview
 
 
+
 ---
 
 ## 📄 Licença

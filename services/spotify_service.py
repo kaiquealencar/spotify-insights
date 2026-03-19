@@ -56,6 +56,18 @@ def buscar_dados(token):
     return list(artista_dict.values())
    
 
+def user_data(token):
+    url = "https://api.spotify.com/v1/me"
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    response = requests.get(url, headers=headers, timeout=10)
+
+    if response.status_code != 200:
+        logging.error(f"Erro ao buscar dados do usuário: {response.status_code} - {response.text}")
+        return None 
+    
+    return response.json()
+
 def refresh_access_token():
     refresh_token = session.get('refresh_token')
 

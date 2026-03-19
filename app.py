@@ -4,7 +4,7 @@ import sys
 import logging
 from flask import Flask, render_template, redirect, request, session
 from requests.auth import HTTPBasicAuth
-from services.spotify_service import buscar_dados
+from services.spotify_service import buscar_dados, user_data
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -73,7 +73,12 @@ def dashboard():
     
     try:
         artistas = buscar_dados(token)
-        return render_template("dashboard.html", lista_v2=artistas) 
+        user_info = user_data(token)
+        nome_usuario = user_info.get('display_name', 'Usuário') if user_info else 'Usuário'
+        foto_usuario = user_info.get('images', [{}])[0].get('url', '') if user_info else ''
+        perfil_url = user_info.get('external_urls', {}).get('spotify', '#') if user_info else '#'
+
+        return render_template("dashboard.html", nome=nome_usuario, foto=foto_usuario, perfil_url=perfil_url, lista_v2=artistas)
     except Exception as e:
         return f"Erro ao buscar dados do Spotify.{str(e)}", 500
 
