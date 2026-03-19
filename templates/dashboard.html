@@ -3,81 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Insights - Top Artistas</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <title>Spotify Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
 
-    <h1>🎧 Meus Top Artistas</h1>
+    <header class="header">        
+        <h1>🎧 Meus Top Artistas</h1>
+        <p>Seus artistas mais ouvidos no último mês</p>
+    </header>
 
-    <div class="grid">
-    {% if lista_v2 %}
-        {% for artista in lista_v2 %}
-        <div class="card-container">
-            <div class="card" id="card{{ loop.index }}">
-                
-                <div class="card-face">
-                    {% if artista.fotos %}
-                        <img class="artist-img" src="{{ artista.fotos[0].url }}" alt="{{ artista.nome }}">
-                    {% else %}
-                        <div class="artist-img" style="display: flex; align-items: center; justify-content: center; font-size: 4rem;">🎸</div>
-                    {% endif %}
-                    <h2>{{ artista.nome }}</h2>
-                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px;">Seu artista favorito</p>
-                    <button onclick="flipCard('card{{ loop.index }}')">
-                        {{ artista.top_musicas|length }} {% if artista.top_musicas|length == 1 %}Música{% else %}Músicas{% endif %} mais escutadas 
-                    </button>
-                </div>
+    <main class="container">
+        <section  class="grid">
+            {% if lista_v2 %}
+                {% for artista in lista_v2 %}
+                <article class="card-container">
+                    <div class="card" id="card{{ loop.index }}">
 
-                <div class="card-face card-back">
-                    <h3 style="color: var(--spotify-green); margin: 0 0 15px 0; font-size: 1.1rem; text-align: center; width: 100%;">
-                        As mais escutadas de <strong> {{ artista.nome }} </strong> no último mês
-                    </h3>
-                    <div class="track-list">
-                        {% if artista.top_musicas %}
-                            {% for track in artista.top_musicas %}
-                            <iframe
-                                src="https://open.spotify.com/embed/track/{{ track.id }}?utm_source=generator&theme=0"
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                                loading="lazy">
-                            </iframe>
-                            {% endfor %}
-                        {% else %}
-                            <p style="text-align: center; margin-top: 50px; color: var(--text-gray);">
-                                Músicas não encontradas.
-                            </p>
-                        {% endif %}
+                        <div class="card-face">
+                            {% if artista.fotos %}
+                                <img class="artist-img" src="{{ artista.fotos[0].url }}" alt="{{ artista.nome }}">
+                            {% else %}
+                                <div class="artist-img" style="display: flex; align-items: center; justify-content: center; font-size: 4rem;">🎸</div>
+                            {% endif %}
+                            <h2>{{ artista.nome }}</h2>
+                            
+                            <button onclick="flipCard('card{{ loop.index }}')">
+                                {{ artista.top_musicas|length }} {% if artista.top_musicas|length == 1 %}Música{% else %}Músicas{% endif %} mais escutadas 
+                            </button>
+                        </div>
+
+                        <div class="card-face card-back">
+                            <h3 style="color: var(--spotify-green); margin: 0 0 15px 0; font-size: 1.1rem; text-align: center; width: 100%;">
+                                {% if artista.top_musicas|length == 1 %}
+                                    A música mais escutada de <strong> {{ artista.nome }} </strong> no último mês
+                                {% else %}
+                                    As músicas mais escutadas de <strong> {{ artista.nome }} </strong> no último mês
+                                {% endif %} 
+                            </h3>
+                            <div class="track-list">
+                                {% if artista.top_musicas %}
+                                    {% for track in artista.top_musicas %}
+                                    <iframe
+                                        src="https://open.spotify.com/embed/track/{{ track.id }}?utm_source=generator&theme=0"
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                        loading="lazy">
+                                    </iframe>
+                                    {% endfor %}
+                                {% else %}
+                                    <p style="text-align: center; margin-top: 50px; color: var(--text-gray);">
+                                        Músicas não encontradas.
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <button class="btn-voltar" onclick="flipCard('card{{ loop.index }}')">Voltar</button>
+                        </div>
+
                     </div>
-                    <button class="btn-voltar" onclick="flipCard('card{{ loop.index }}')">Voltar</button>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: 1/-1; text-align: center; margin-top: 50px;">
+                    <p>Nenhum artista encontrado. Tente fazer o login novamente.</p>
+                    <a href="/" style="color: var(--spotify-green); text-decoration: none; font-weight: bold;">Voltar para Home</a>
                 </div>
+            {% endif %}
+        </section>
+    </main>
 
-            </div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div style="grid-column: 1/-1; text-align: center; margin-top: 50px;">
-            <p>Nenhum artista encontrado. Tente fazer o login novamente.</p>
-            <a href="/" style="color: var(--spotify-green); text-decoration: none; font-weight: bold;">Voltar para Home</a>
-        </div>
-    {% endif %}
-    </div>
-
-    <script>
-       function flipCard(id) {
-            const card = document.getElementById(id);
-            const isFlipped = card.classList.contains("flipped");
-            
-            if (isFlipped) {
-                const iframes = card.querySelectorAll(".card-back iframe");
-                iframes.forEach(iframe => {
-                    const src = iframe.src;
-                    iframe.src = src;
-                });
-            }
-
-            card.classList.toggle("flipped");
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    
 
 </body>
 </html>
