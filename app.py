@@ -1,10 +1,13 @@
-import os, requests, sys
-from flask import Flask, render_template, redirect, request
+import os
+import requests
+import sys
+import logging
+from flask import Flask, render_template, redirect, request, session
 from requests.auth import HTTPBasicAuth
-
 from services.spotify_service import buscar_dados
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
 
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
@@ -34,22 +37,45 @@ def callback():
 
     if not code:
         return "Erro: Código de autorização não encontrado.", 400
-    
-    res = requests.post("https://accounts.spotify.com/api/token", 
+
+    try:
+        res = requests.post("https://accounts.spotify.com/api/token", 
         data={'grant_type': 'authorization_code', 'code': code, 'redirect_uri': REDIRECT_URI},
         auth=HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET))
-    
-    data = res.json()
-    token = data.get('access_token')
-    
-    if not token:
-        return "Erro: Token de acesso não encontrado.", 400
-    
-    user_info = requests.get("https://api.spotify.com/v1/me", headers={"Authorization": f"Bearer {token}"}).json()
-    print(f"\n[CHECK] Spotify diz que você é: {user_info.get('email')}")
 
-    artistas = buscar_dados(token)
-    return render_template("dashboard.html", lista_v2=artistas)
+        if res.status_code != 200:
+            return f"Erro ao obter token de acesso: {res.text}", 400
+                
+        data = res.json()
+
+        access_token = data.get('access_token')
+        refresh_token = data.get('refresh_token')
+
+        if not access_token:
+            return "Erro: Token de acesso não encontrado.", 400
+        
+        session['access_token'] = access_token
+        session['refresh_token'] = refresh_token
+
+
+        return redirect("/dashboard")
+    
+    except Exception as e:
+        logging.error(f"Erro ao obter token de acesso: {str(e)}")
+        return "Erro ao obter token de acesso.", 500
+
+@app.route('/dashboard')
+def dashboard():
+    token = session.get('access_token')
+
+    if not token:
+        return redirect('/login')
+    
+    try:
+        artistas = buscar_dados(token)
+        return render_template("dashboard.html", lista_v2=artistas) 
+    except Exception as e:
+        return f"Erro ao buscar dados do Spotify.{str(e)}", 500
 
 
 if __name__ == '__main__':

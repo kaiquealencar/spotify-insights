@@ -1,0 +1,36 @@
+.env
+*.env
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+venv/
+env/
+ENV/
+.env
+.venv/
+
+.pytest_cache/
+__pycache__/
+
+prints/
+
+*.log
+
+.DS_Store        # macOS
+Thumbs.db        # Windows
+
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+*.egg
+*.egg-info/
+dist/
+build/
+*.wheel
+
+instance/
