@@ -121,8 +121,10 @@ Este projeto foi desenvolvido com foco em:
 ---
 
 ## 📸 Preview
-
-
+[] (https://github.com/kaiquealencar/spotify-insights/blob/main/home.png)
+[] (https://github.com/kaiquealencar/spotify-insights/blob/main/login.png)
+[] (https://github.com/kaiquealencar/spotify-insights/blob/main/dashboard.png)
+[] (https://github.com/kaiquealencar/spotify-insights/blob/main/cards.png)
 ---
 
 ## 📄 Licença
