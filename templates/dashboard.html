@@ -8,17 +8,24 @@
 </head>
 <body>
     <div class="user-info user-link" title="Acessar o perfil do Spotify" style="margin: 20px;">
-        {% if foto %}
+        {% if foto and perfil_url %}
           <a href="{{ perfil_url }}"  target="_blank">
             <img src="{{ foto }}" alt="Foto do usuário" class="user-photo">
           </a>
-        {% endif %}
-         <a href="{{ perfil_url }}" target="_blank" class="user-name user-link">{{ nome }}</a>
+          <a href="{{ perfil_url }}" target="_blank" class="user-name user-link">{{ nome }}</a>
+        {% endif %}         
     </div>
 
     <header class="header">        
         <h1> 🎧 Meus Top Artistas de  </h1>
-        <p> {{ nome.split(" ")[0] }}, esses são seus artistas mais ouvidos no último mês</p>
+        <p> 
+            {% if nome %} 
+                {{ nome.split(" ")[0] }}, esses são seus artistas mais ouvidos no último mês
+            {% else %}
+                Nenhum artista encontrado. Tente fazer o login novamente.
+            {% endif %}
+        </p>
+
 
        
     </header>

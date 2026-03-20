@@ -39,7 +39,7 @@ def login():
     from urllib.parse import urlencode
     auth_url = f"https://accounts.spotify.com/authorize?{urlencode(params)}"
 
-    print("REDIRECT_URI usado:", repr(REDIRECT_URI))  # vai mostrar exatamente o que está sendo passado
+    print("REDIRECT_URI usado:", repr(REDIRECT_URI))  
     print("URL de login:", auth_url)
     return redirect(auth_url)
 
