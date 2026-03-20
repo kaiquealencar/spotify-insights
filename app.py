@@ -4,7 +4,10 @@ import sys
 import logging
 from flask import Flask, render_template, redirect, request, session
 from requests.auth import HTTPBasicAuth
+from dotenv import load_dotenv
 from services.spotify_service import buscar_dados, user_data
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -29,6 +32,9 @@ def login():
     }
     from urllib.parse import urlencode
     auth_url = f"https://accounts.spotify.com/authorize?{urlencode(params)}"
+
+    print("REDIRECT_URI usado:", repr(REDIRECT_URI))  # vai mostrar exatamente o que está sendo passado
+    print("URL de login:", auth_url)
     return redirect(auth_url)
 
 @app.route('/callback')
@@ -84,4 +90,7 @@ def dashboard():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9000)
+    debug_mode = os.getenv("DEBUG", "False").lower() == "true"    
+    port = int(os.getenv("PORT", 5000))
+
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
