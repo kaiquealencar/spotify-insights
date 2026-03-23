@@ -26,7 +26,6 @@ Aplicação web que integra com a API do Spotify para exibir seus artistas mais 
 ---
 
 ## 📦 Dependências
-
 ```txt
 Flask==3.1.3
 requests==2.32.5
@@ -40,14 +39,12 @@ python-dotenv==1.2.2
 ## ⚙️ Como rodar o projeto
 
 ### 1. Clone o repositório
-
 ```bash
 git clone https://github.com/kaiquealencar/spotify-insights
 cd spotify-insights
 ```
 
 ### 2. Crie e ative um ambiente virtual
-
 ```bash
 python -m venv .venv
 ```
@@ -55,41 +52,30 @@ python -m venv .venv
 Ativar:
 
 * Windows:
-
 ```bash
 venv\Scripts\activate
 ```
 
 * Linux/Mac:
-
 ```bash
 source venv/bin/activate
 ```
 
----
-
 ### 3. Instale as dependências
-
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ### 4. Configure as variáveis de ambiente
 
 Crie um arquivo `.env` na raiz do projeto e adicione:
-
 ```env
 CLIENT_ID=seu_client_id
 CLIENT_SECRET=seu_client_secret
 REDIRECT_URI=http://localhost:9000/callback
 ```
 
----
-
 ### 5. Execute a aplicação
-
 ```bash
 python app.py
 ```
@@ -121,16 +107,12 @@ Este projeto foi desenvolvido com foco em:
 ---
 
 ## 📸 Preview
-<<<<<<< HEAD
 
+![Login](https://github.com/kaiquealencar/spotify-insights/blob/main/login.png?raw=true)
+![Home](https://github.com/kaiquealencar/spotify-insights/blob/main/home.png?raw=true)
+![Dashboard](https://github.com/kaiquealencar/spotify-insights/blob/main/dashboard.png?raw=true)
+![Cards](https://github.com/kaiquealencar/spotify-insights/blob/main/cards.png?raw=true)
 
-
-=======
-[] (https://github.com/kaiquealencar/spotify-insights/blob/main/home.png)
-[] (https://github.com/kaiquealencar/spotify-insights/blob/main/login.png)
-[] (https://github.com/kaiquealencar/spotify-insights/blob/main/dashboard.png)
-[] (https://github.com/kaiquealencar/spotify-insights/blob/main/cards.png)
->>>>>>> 764a8b08d526a11d2c4134b8372fd612dd063169
 ---
 
 ## 📄 Licença
